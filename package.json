@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-nomer",
+  "version": "1.0.0",
+  "description": "NodeJS wrapper for nomer",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "build": "babel src -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zedomel/nodejs-nomer.git"
+  },
+  "keywords": [
+    "nomer",
+    "nodejs"
+  ],
+  "author": "Jose A Salim",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/zedomel/nodejs-nomer/issues"
+  },
+  "homepage": "https://github.com/zedomel/nodejs-nomer#readme",
+  "dependencies": {
+    "java-caller": "^3.3.0"
+  }
+}
