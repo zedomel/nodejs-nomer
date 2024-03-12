@@ -2,10 +2,14 @@
   "name": "nodejs-nomer",
   "version": "1.0.0",
   "description": "NodeJS wrapper for nomer",
+  "config": {
+    "nomerVersion": "0.5.6"
+  },
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "preinstall": "./install_nomer.sh $npm_package_config_nomerVersion"
   },
   "repository": {
     "type": "git",
@@ -21,7 +25,9 @@
     "url": "https://github.com/zedomel/nodejs-nomer/issues"
   },
   "homepage": "https://github.com/zedomel/nodejs-nomer#readme",
-  "dependencies": {
-    "java-caller": "^3.3.0"
+  "devDependencies": {
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0"
   }
 }

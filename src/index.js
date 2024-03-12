@@ -1,49 +1,92 @@
-const { exec } = require('child_process')
+import { runNomer, getNomerSimpleCmd, getNomerValidateCmd, getNomerMatchCmd } from "./utils";
+import Result from './result'
 
 class Nomer {
 
-    constructor() {
+    constructor(properties = null, echoOpt = "") {
 
     }
 
-    getNomerValidateCmd(filepath="", cmd="validate-term",properties=null) {
-        if (filepath === "") {
-            throw new Exception("Filepath cannot be empty string");
-        }
-        let nomerCmd = `curl -L ${filepath} | nomer ${cmd}`;
-        if (properties) {
-            nomerCmd = `${nomerCmd} -p ${properties}`;
-        }
-
-        return nomerCmd;
+    /**
+     * Show version
+     * @returns string
+     */
+    version() {
+        const res = runNomer(getNomerSimpleCmd())
+        return res;
     }
 
-    getNomerMatchCmd(query="",cmd="append",matcher="globi-taxon-cache",properties=null,outputFormat=null,echoOpt="") {
-        let nomerCmd = `echo ${echoOpt} ${query} | nomer ${cmd} ${matcher} -Xmx4096m -Xms1024m`;
-        if (properties) {
-            nomerCmd = `${nomerCmd} -p ${properties}`;
-        }
-        if (outputFormat) {
-            nomerCmd = `${nomerCmd} -o ${outputFormat}`;
-        }
-
-        return nomerCmd;
+    clean(properties = null) {
+        const res = runNomer(getNomerSimpleCmd("clean", this.getProperties(properties)))
+        return res;
     }
 
-    getNomerSimpleCmd(cmd="version", verbose=false, properties=null, outputFormat=null) {
-        
+    inputSchema(properties = null) {
+        const res = runNomer(getNomerSimpleCmd("input-schema", this.getProperties(properties)))
+        return res;
     }
 
-    runNomer() {
-        try {
-            const java = new JavaCaller({
-                jar: path.join(__dirname, "bin", "nomer.jar")
-            })
-            const {status, stdout, stderr}  = java.run(["-Xms256m", "-Xmx2048m"])
-        } catch (error) {
-            
-        }
+    outputSchema(properties = null) {
+        const res = runNomer(getNomerSimpleCmd("output-schema", this.getProperties(properties)))
+        return res;
     }
+
+    properties(properties = null) {
+        const res = runNomer(getNomerSimpleCmd("properties", this.getProperties(properties)))
+        return res;
+    }
+
+    matcher(outputFormat = "tsv", verbose = false) {
+        const res = runNomer(getNomerSimpleCmd("matchers", verbose, null, outputFormat))
+        return res;
+    }
+
+    validateTerm(filepath = "", properties = null) {
+        const res = runNomer(getNomerValidateCmd(filepath, "validate-term-link", this.getProperties(properties)))
+        return res;
+    }
+
+    replace(query = "", matcher = "globi-taxon-cache", properties = null, echoOpt = "") {
+        const res = runNomer(
+            getNomerMatchCmd(
+                query,
+                "replace",
+                matcher,
+                this.getProperties(properties),
+                null,
+                echoOpt
+            )
+        );
+        return res;
+    }
+
+    append(query = "", matcher = "globi-taxon-cache", properties = null, outputFormat = "tsv", echoOpt = "") {
+        const res = runNomer(
+            getNomerMatchCmd(
+                query,
+                "append",
+                matcher,
+                this.getProperties(properties),
+                outputFormat,
+                echoOpt
+            )
+        );
+        return res;
+    }
+
+    getProperties(p) {
+        return p;
+    }
+
+    toJson(result) {
+        return Result.json(result);
+    }
+
+    toArray(result) {
+        return Result.tsv(result);
+    }
+
+
 }
 
 module.exports = Nomer;
