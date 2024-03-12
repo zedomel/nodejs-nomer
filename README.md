@@ -27,4 +27,4 @@ License: GPL 3.0
 
 ## Authors
 
-nodejs-nomer is written by @zedomel
+nodejs-nomer is written by [@zedomel](https://github.com/zedomel)
