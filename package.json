@@ -1,6 +1,6 @@
 {
   "name": "nodejs-nomer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS wrapper for nomer",
   "config": {
     "nomerVersion": "0.5.6"
