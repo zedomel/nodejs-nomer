@@ -86,6 +86,10 @@ class Nomer {
         return Result.tsv(result);
     }
 
+    toObject(result) {
+        return Result.tsv(result, true)
+    }
+
 
 }
 
