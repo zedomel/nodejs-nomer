@@ -97,7 +97,7 @@ class Nomer {
         const properties = getProperties(content)
         const schemaInput = JSON.parse(properties["nomer.schema.input"]).map((i) => i.type + 'Input')
         const schemaAppend = JSON.parse(properties["nomer.append.schema.output"]).map((i) => i.type)
-        return Result.tsv(result, [...schemaInput, ...schemaAppend])
+        return Result.tsv(result, [...schemaInput, "matchType", ...schemaAppend])
     }
 
 
