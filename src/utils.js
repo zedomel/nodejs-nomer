@@ -43,7 +43,7 @@ const runNomer = (nomerCmd) => {
     try {
         const result = execSync(nomerCmd).toString();
         if (result) {
-            return result.trim();
+            return result.trimEnd();
         }
     } catch (error) {
         console.log("Error running nomer cmd: " + error.message);

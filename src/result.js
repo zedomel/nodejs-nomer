@@ -1,4 +1,6 @@
 const TSV_COLUMNS = [
+    'inputId',
+    'inputName',
     'match',
     'externalId',
     'name',
@@ -15,12 +17,18 @@ const TSV_COLUMNS = [
 class Result {
 
     static json(result) {
-        return JSON.parse(result)
+        const arr = [];
+        result.split("\n").forEach((e) => arr.push(JSON.parse(e)))
+        return arr;
     }
 
-    static tsv(result, toObject = false) {
-        const values = result.split('\t').slice(1);
-        return toObject ? Object.assign(...TSV_COLUMNS.map((k, i) => ({ [k]: values[i] }))) : values
+    static tsv(result, columns = null) {
+        const arr = [];
+        result.split('\n').forEach((line) => {
+            arr.push(line.split('\t'));
+        });
+
+        return columns ? arr.map((v) => Object.assign(...columns.map((k, i) => ({ [k]: v[i] })))) : arr
     }
 }
 

@@ -1,10 +1,16 @@
 import { runNomer, getNomerSimpleCmd, getNomerValidateCmd, getNomerMatchCmd } from "./utils";
 import Result from './result'
+import { getProperties } from "properties-file";
+
 
 class Nomer {
 
-    constructor(properties = null, echoOpt = "") {
+    propertiesPath = null;
+    echoOpt = "";
 
+    constructor(propertiesPath = null, echoOpt = "") {
+        this.propertiesPath = propertiesPath;
+        this.echoOpt = echoOpt;
     }
 
     /**
@@ -16,23 +22,23 @@ class Nomer {
         return res;
     }
 
-    clean(properties = null) {
-        const res = runNomer(getNomerSimpleCmd("clean", this.getProperties(properties)))
+    clean() {
+        const res = runNomer(getNomerSimpleCmd("clean", this.getPropertiesPath()))
         return res;
     }
 
-    inputSchema(properties = null) {
-        const res = runNomer(getNomerSimpleCmd("input-schema", this.getProperties(properties)))
+    inputSchema() {
+        const res = runNomer(getNomerSimpleCmd("input-schema", this.getPropertiesPath()))
         return res;
     }
 
-    outputSchema(properties = null) {
-        const res = runNomer(getNomerSimpleCmd("output-schema", this.getProperties(properties)))
+    outputSchema() {
+        const res = runNomer(getNomerSimpleCmd("output-schema", this.getPropertiesPath()))
         return res;
     }
 
-    properties(properties = null) {
-        const res = runNomer(getNomerSimpleCmd("properties", this.getProperties(properties)))
+    properties() {
+        const res = runNomer(getNomerSimpleCmd("properties", this.getPropertiesPath()))
         return res;
     }
 
@@ -41,41 +47,41 @@ class Nomer {
         return res;
     }
 
-    validateTerm(filepath = "", properties = null) {
-        const res = runNomer(getNomerValidateCmd(filepath, "validate-term-link", this.getProperties(properties)))
+    validateTerm(filepath = "") {
+        const res = runNomer(getNomerValidateCmd(filepath, "validate-term-link", this.getPropertiesPath()))
         return res;
     }
 
-    replace(query = "", matcher = "globi-taxon-cache", properties = null, echoOpt = "") {
+    replace(query = "", matcher = "globi-taxon-cache") {
         const res = runNomer(
             getNomerMatchCmd(
                 query,
                 "replace",
                 matcher,
-                this.getProperties(properties),
+                this.getPropertiesPath(),
                 null,
-                echoOpt
+                this.echoOpt
             )
         );
         return res;
     }
 
-    append(query = "", matcher = "globi-taxon-cache", properties = null, outputFormat = "tsv", echoOpt = "") {
+    append(query = "", matcher = "globi-taxon-cache", outputFormat = "tsv") {
         const res = runNomer(
             getNomerMatchCmd(
                 query,
                 "append",
                 matcher,
-                this.getProperties(properties),
+                this.getPropertiesPath(),
                 outputFormat,
-                echoOpt
+                this.echoOpt
             )
         );
         return res;
     }
 
-    getProperties(p) {
-        return p;
+    getPropertiesPath() {
+        return this.propertiesPath;
     }
 
     toJson(result) {
@@ -87,7 +93,11 @@ class Nomer {
     }
 
     toObject(result) {
-        return Result.tsv(result, true)
+        const content = this.properties(this.getPropertiesPath())
+        const properties = getProperties(content)
+        const schemaInput = JSON.parse(properties["nomer.schema.input"]).map((i) => i.type + 'Input')
+        const schemaAppend = JSON.parse(properties["nomer.append.schema.output"]).map((i) => i.type)
+        return Result.tsv(result, [...schemaInput, ...schemaAppend])
     }
 
 
