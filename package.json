@@ -1,6 +1,6 @@
 {
   "name": "nodejs-nomer",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "NodeJS wrapper for nomer",
   "directories": {
     "bin": "./bin"
