@@ -2,14 +2,13 @@
   "name": "nodejs-nomer",
   "version": "1.0.7",
   "description": "NodeJS wrapper for nomer",
-  "config": {
-    "nomerVersion": "0.5.7"
+  "directories": {
+    "bin": "./bin"
   },
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
-    "build": "babel src -d dist",
-    "preinstall": "./install_nomer.sh ${npm_package_config_nomerVersion}"
+    "build": "babel src -d dist"
   },
   "repository": {
     "type": "git",
