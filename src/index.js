@@ -1,4 +1,4 @@
-import { runNomer, getNomerSimpleCmd, getNomerValidateCmd, getNomerMatchCmd } from "./utils";
+import { runNomer, runNomerAsync, getNomerSimpleCmd, getNomerValidateCmd, getNomerMatchCmd } from "./utils";
 import Result from './result'
 import { getProperties } from "properties-file";
 
@@ -75,9 +75,14 @@ class Nomer {
                 this.getPropertiesPath(),
                 outputFormat,
                 this.echoOpt
-            )
+            ),
+            query
         );
         return res;
+    }
+
+    appendAsync(matcher = "globi-taxon-cache", outputFormat = "tsv") {
+        return runNomerAsync(`nomer append ${matcher} -o ${outputFormat}`)
     }
 
     getPropertiesPath() {
