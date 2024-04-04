@@ -4,7 +4,7 @@ const getNomerValidateCmd = (filepath = "", cmd = "validate-term", properties = 
     if (filepath === "") {
         throw new Exception("Filepath cannot be empty string");
     }
-    let nomerCmd = `curl -L ${filepath} | ./bin/nomer ${cmd}`;
+    let nomerCmd = `curl -L ${filepath} | nomer ${cmd}`;
     if (properties) {
         nomerCmd = `${nomerCmd} -p ${properties}`;
     }
@@ -13,7 +13,7 @@ const getNomerValidateCmd = (filepath = "", cmd = "validate-term", properties = 
 }
 
 const getNomerMatchCmd = (query = "", cmd = "append", matcher = "globi-taxon-cache", properties = null, outputFormat = null, echoOpt = "-e") => {
-    let nomerCmd = `echo ${echoOpt} '${query}' | ./bin/nomer ${cmd} ${matcher}`;
+    let nomerCmd = `echo ${echoOpt} '${query}' | nomer ${cmd} ${matcher}`;
     if (properties) {
         nomerCmd = `${nomerCmd} -p ${properties}`;
     }
@@ -25,7 +25,7 @@ const getNomerMatchCmd = (query = "", cmd = "append", matcher = "globi-taxon-cac
 }
 
 const getNomerSimpleCmd = (cmd = "version", verbose = false, properties = null, outputFormat = null) => {
-    let nomerCmd = `./bin/nomer ${cmd}`;
+    let nomerCmd = `nomer ${cmd}`;
     if (properties) {
         nomerCmd = `${nomerCmd} -p ${properties}`;
     }
@@ -41,7 +41,9 @@ const getNomerSimpleCmd = (cmd = "version", verbose = false, properties = null, 
 
 const runNomer = (nomerCmd) => {
     try {
-        const result = execSync(nomerCmd).toString();
+        const result = execSync(nomerCmd, {
+            maxBuffer: 4096 * 4096
+        }).toString();
         if (result) {
             return result.trimEnd();
         }

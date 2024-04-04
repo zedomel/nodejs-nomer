@@ -1,19 +1,3 @@
-const TSV_COLUMNS = [
-    'inputId',
-    'inputName',
-    'match',
-    'externalId',
-    'name',
-    'authorship',
-    'rank',
-    'commonNames',
-    'path',
-    'pathIds',
-    'pathNames',
-    'pathAuthorship',
-    'externalUrl'
-];
-
 class Result {
 
     static json(result) {

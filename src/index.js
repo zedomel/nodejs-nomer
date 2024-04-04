@@ -23,22 +23,22 @@ class Nomer {
     }
 
     clean() {
-        const res = runNomer(getNomerSimpleCmd("clean", this.getPropertiesPath()))
+        const res = runNomer(getNomerSimpleCmd("clean", false, this.getPropertiesPath()))
         return res;
     }
 
     inputSchema() {
-        const res = runNomer(getNomerSimpleCmd("input-schema", this.getPropertiesPath()))
+        const res = runNomer(getNomerSimpleCmd("input-schema", false, this.getPropertiesPath()))
         return res;
     }
 
     outputSchema() {
-        const res = runNomer(getNomerSimpleCmd("output-schema", this.getPropertiesPath()))
+        const res = runNomer(getNomerSimpleCmd("output-schema", false, this.getPropertiesPath()))
         return res;
     }
 
     properties() {
-        const res = runNomer(getNomerSimpleCmd("properties", this.getPropertiesPath()))
+        const res = runNomer(getNomerSimpleCmd("properties", false, this.getPropertiesPath()))
         return res;
     }
 
