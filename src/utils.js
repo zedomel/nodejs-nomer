@@ -1,4 +1,4 @@
-const { execSync, exec } = require('child_process')
+const { execSync, exec, spawn } = require('child_process')
 
 const getNomerValidateCmd = (filepath = "", cmd = "validate-term", properties = null) => {
     if (filepath === "") {
@@ -54,11 +54,13 @@ const runNomer = (nomerCmd) => {
 }
 
 const runNomerAsync = (nomerCmd) => {
-    const p = exec(nomerCmd, {
-        maxBuffer: 4096 * 4096
+    const nomerCmdArr = nomerCmd.split(/\s+/)
+    const p = spawn(nomerCmdArr[0], nomerCmdArr.slice(1), {
+        // maxBuffer: 4096 * 4096
+        shell: true
     })
 
-    return { stdin: p.stdin, stdout: p.stdout }
+    return p
 }
 
 module.exports = {
