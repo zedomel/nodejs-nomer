@@ -5,14 +5,11 @@
   "bin": {
     "nomer": "./bin/nomer"
   },
-  "config": {
-    "nomerVersion": "0.5.7"
-  },
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
     "build": "babel src -d dist",
-    "preinstall": "./install_nomer.sh ${npm_package_config_nomerVersion}"
+    "preinstall": "./install_nomer.sh"
   },
   "repository": {
     "type": "git",
