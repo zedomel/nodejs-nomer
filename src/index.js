@@ -3,7 +3,7 @@ import Result from './result'
 import { getProperties } from "properties-file";
 
 
-class Nomer {
+export class Nomer {
 
     propertiesPath = null;
     echoOpt = "";
@@ -104,8 +104,4 @@ class Nomer {
         const schemaAppend = JSON.parse(properties["nomer.append.schema.output"]).map((i) => i.type)
         return Result.tsv(result, [...schemaInput, "matchType", ...schemaAppend])
     }
-
-
 }
-
-module.exports = Nomer;

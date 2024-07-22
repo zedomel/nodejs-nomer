@@ -5,10 +5,10 @@
   "bin": {
     "nomer": "./bin/nomer"
   },
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "npm run test",
-    "build": "webpack",
+    "build": "babel src -d dist",
     "preinstall": "./install_nomer.sh"
   },
   "repository": {

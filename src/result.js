@@ -1,4 +1,4 @@
-class Result {
+export class Result {
 
     static json(result) {
         const arr = [];
@@ -15,5 +15,3 @@ class Result {
         return columns ? arr.map((v) => Object.assign(...columns.map((k, i) => ({ [k]: v[i] })))) : arr
     }
 }
-
-module.exports = Result

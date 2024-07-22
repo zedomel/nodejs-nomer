@@ -1,6 +1,6 @@
-const { execSync, exec, spawn } = require('child_process')
+const { execSync, spawn } = require('child_process')
 
-const getNomerValidateCmd = (filepath = "", cmd = "validate-term", properties = null) => {
+export const getNomerValidateCmd = (filepath = "", cmd = "validate-term", properties = null) => {
     if (filepath === "") {
         throw new Exception("Filepath cannot be empty string");
     }
@@ -12,7 +12,7 @@ const getNomerValidateCmd = (filepath = "", cmd = "validate-term", properties = 
     return nomerCmd;
 }
 
-const getNomerMatchCmd = (query = "", cmd = "append", matcher = "globi-taxon-cache", properties = null, outputFormat = null, echoOpt = "-e") => {
+export const getNomerMatchCmd = (query = "", cmd = "append", matcher = "globi-taxon-cache", properties = null, outputFormat = null, echoOpt = "-e") => {
     let nomerCmd = `echo ${echoOpt} '${query}' | nomer ${cmd} ${matcher}`;
     if (properties) {
         nomerCmd = `${nomerCmd} -p ${properties}`;
@@ -24,7 +24,7 @@ const getNomerMatchCmd = (query = "", cmd = "append", matcher = "globi-taxon-cac
     return nomerCmd;
 }
 
-const getNomerSimpleCmd = (cmd = "version", verbose = false, properties = null, outputFormat = null) => {
+export const getNomerSimpleCmd = (cmd = "version", verbose = false, properties = null, outputFormat = null) => {
     let nomerCmd = `nomer ${cmd}`;
     if (properties) {
         nomerCmd = `${nomerCmd} -p ${properties}`;
@@ -39,7 +39,7 @@ const getNomerSimpleCmd = (cmd = "version", verbose = false, properties = null, 
     return nomerCmd;
 }
 
-const runNomer = (nomerCmd) => {
+export const runNomer = (nomerCmd) => {
     try {
         const result = execSync(nomerCmd, {
             maxBuffer: 4096 * 4096,
@@ -53,7 +53,7 @@ const runNomer = (nomerCmd) => {
     }
 }
 
-const runNomerAsync = (nomerCmd) => {
+export const runNomerAsync = (nomerCmd) => {
     const nomerCmdArr = nomerCmd.split(/\s+/)
     const p = spawn(nomerCmdArr[0], nomerCmdArr.slice(1), {
         // maxBuffer: 4096 * 4096
@@ -62,11 +62,3 @@ const runNomerAsync = (nomerCmd) => {
 
     return p
 }
-
-module.exports = {
-    getNomerValidateCmd,
-    getNomerMatchCmd,
-    getNomerSimpleCmd,
-    runNomer,
-    runNomerAsync
-};
