@@ -1,4 +1,4 @@
-export class Result {
+export default class Result {
 
     static json(result) {
         const arr = [];
