@@ -93,8 +93,8 @@ export class Nomer {
         return Result.json(result);
     }
 
-    toArray(result) {
-        return Result.tsv(result);
+    toArray(result, columns = null) {
+        return Result.tsv(result, columns);
     }
 
     toObject(result) {
