@@ -82,7 +82,16 @@ export class Nomer {
     }
 
     appendAsync(matcher = "globi-taxon-cache", outputFormat = "tsv") {
-        return runNomerAsync(`nomer append ${matcher} -o ${outputFormat}`)
+        return runNomerAsync(
+            getNomerMatchCmd(
+                null,
+                "append",
+                matcher,
+                this.getPropertiesPath(),
+                outputFormat,
+                this.echoOpt
+            )
+        );
     }
 
     getPropertiesPath() {

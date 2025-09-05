@@ -13,7 +13,13 @@ export const getNomerValidateCmd = (filepath = "", cmd = "validate-term", proper
 }
 
 export const getNomerMatchCmd = (query = "", cmd = "append", matcher = "globi-taxon-cache", properties = null, outputFormat = null, echoOpt = "-e") => {
-    let nomerCmd = `echo ${echoOpt} '${query}' | nomer ${cmd} ${matcher}`;
+    let nomerCmd = "";
+
+    if (query) {
+        nomerCmd = `echo ${echoOpt} '${query}' | `;
+    }
+    nomerCmd = `${nomerCmd}nomer ${cmd} ${matcher}`;
+
     if (properties) {
         nomerCmd = `${nomerCmd} -p ${properties}`;
     }
