@@ -20,6 +20,18 @@ jobs:
           node-version: '21.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npm publish --provenance --access public
+      - name: Run build process
+        run: npm run build
+      - name: Verify dist folder exists
+        run: |
+          if [! -d "dist" ]; then
+            echo "X dist folder not found after build!"
+            ls -la
+            exit 1
+          fi
+          echo "OK dist folder content:"
+          ls -la dist/
+      - name: Publish to npm
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
