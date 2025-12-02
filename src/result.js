@@ -9,7 +9,8 @@ export default class Result {
     static tsv(result, columns = null) {
         const arr = [];
         result.split('\n').forEach((line) => {
-            arr.push(line.split('\t'));
+            if (line.trim())
+                arr.push(line.split('\t'));
         });
 
         return columns ? arr.map((v) => Object.assign(...columns.map((k, i) => ({ [k]: v[i] })))) : arr
