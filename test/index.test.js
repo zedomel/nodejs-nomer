@@ -14,7 +14,7 @@ describe('Nomer Integration Tests', () => {
         it('should return nomer version string', () => {
             const result = nomer.version();
             expect(result).toBeTruthy();
-            expect(result).toContain('0.5.17');
+            expect(result).toContain('0.6.1');
         });
     });
 
@@ -293,7 +293,7 @@ describe('Nomer Integration Tests', () => {
                 const arrayResult = nomer.toArray(output);
                 expect(arrayResult).toBeTruthy();
                 expect(Array.isArray(arrayResult)).toBe(true);
-                // Each line should be valid JSON
+                // Each line should be valid JSON`
                 arrayResult.forEach(arr => {
                     expect(arr[3]).toMatch(/HAS_ACCEPTED_NAME|SYNONYM_OF/);
                 });
