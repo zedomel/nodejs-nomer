@@ -22,6 +22,8 @@ jobs:
       - run: npm ci
       - name: Run build process
         run: npm run build
+      - name: Tests
+        run: npm test
       - name: Verify dist folder exists
         run: |
           if [! -d "dist" ]; then
@@ -32,6 +34,4 @@ jobs:
           echo "OK dist folder content:"
           ls -la dist/
       - name: Publish to npm
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: npm publish --provenance --access public        
