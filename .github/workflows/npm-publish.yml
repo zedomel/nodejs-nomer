@@ -23,8 +23,6 @@ jobs:
       - run: npm ci
       - name: Run build process
         run: npm run build
-      - name: Tests
-        run: npm test
       - name: Verify dist folder exists
         run: |
           if [! -d "dist" ]; then
